@@ -4,7 +4,6 @@ import com.api.gestor_pedidos_telu.domain.category.Category;
 import com.api.gestor_pedidos_telu.dto.CategoryDTO;
 import com.api.gestor_pedidos_telu.infra.Exception.NotFoundException;
 import com.api.gestor_pedidos_telu.repository.CategoryRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class CategoryService {
 
     @Autowired
@@ -62,7 +60,7 @@ public class CategoryService {
     private String generateSlug(String name) {
         if (name != null && !name.trim().isEmpty()) {
             String normalized = Normalizer.normalize(name.trim(), Normalizer.Form.NFD);
-            String slug = normalized.replaceAll("\\p{M}", ""); // Remove marcas de acentuação
+            String slug = normalized.replaceAll("\\p{M}", "");
 
             return slug.toLowerCase().replaceAll(" ", "-").replaceAll("-+", "-");
         }

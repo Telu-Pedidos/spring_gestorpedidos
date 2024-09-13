@@ -16,7 +16,7 @@ public class CategoryController {
 
     @Autowired
     CategoryService categoryService;
-    
+
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
         List<Category> categories = categoryService.getAllCategories();
@@ -25,8 +25,8 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-        Category order = categoryService.getCategoryById(id);
-        return ResponseEntity.ok(order);
+        Category category = categoryService.getCategoryById(id);
+        return ResponseEntity.ok(category);
     }
 
     @PostMapping

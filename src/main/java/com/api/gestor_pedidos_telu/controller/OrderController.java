@@ -52,12 +52,6 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/status/{status}")
-    public ResponseEntity<List<Order>> getOrdersByStatus(@PathVariable OrderStatus status) {
-        List<Order> orders = orderService.getOrdersByStatus(status);
-        return ResponseEntity.ok(orders);
-    }
-
     @PutMapping("/{id}/cancel")
     public ResponseEntity<Order> cancelOrder(@PathVariable Long id) throws Exception {
         Order canceledOrder = orderService.cancelOrder(id);

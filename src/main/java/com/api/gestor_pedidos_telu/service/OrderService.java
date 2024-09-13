@@ -21,10 +21,6 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
-
     public List<Order> getOrders(OrderStatus status, LocalDateTime startDate, LocalDateTime endDate) {
         if (status != null && startDate != null && endDate != null) {
             return orderRepository.findByStatusAndStartAtBetween(status, startDate, endDate)
@@ -66,10 +62,6 @@ public class OrderService {
     public void deleteOrder(Long id) {
         findOrderByIdOrThrow(id);
         orderRepository.deleteById(id);
-    }
-
-    public List<Order> getOrdersByStatus(OrderStatus status) {
-        return orderRepository.findAllByStatus(status).orElse(Collections.emptyList());
     }
 
     public Order cancelOrder(Long id) throws Exception {
