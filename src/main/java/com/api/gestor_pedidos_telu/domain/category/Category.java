@@ -20,7 +20,7 @@ public class Category {
     private Long id;
 
     @NotNull(message = "O nome é obrigatório")
-    @Size(min = 3, max = 150, message = "O nome deve ter entre 3 a 100 caracteres")
+    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 a 100 caracteres")
     private String name;
 
     @Size(max = 150, message = "O slug deve ter no máximo 150 caracteres")
