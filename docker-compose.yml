@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: postgres_db_telupedidos
+    environment:
+      POSTGRES_DB: telupedidos
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root123
+    ports:
+      - "5432:5432"
+    volumes:
+      - gestor-pedidos-telu_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  gestor-pedidos-telu_postgres_data:
