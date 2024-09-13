@@ -3,7 +3,7 @@ package com.api.gestor_pedidos_telu.service;
 import com.api.gestor_pedidos_telu.domain.order.Order;
 import com.api.gestor_pedidos_telu.domain.order.OrderStatus;
 import com.api.gestor_pedidos_telu.infra.Exception.InvalidOrderDateException;
-import com.api.gestor_pedidos_telu.infra.Exception.OrderNotFoundException;
+import com.api.gestor_pedidos_telu.infra.Exception.NotFoundException;
 import com.api.gestor_pedidos_telu.dto.OrderDTO;
 import com.api.gestor_pedidos_telu.repository.OrderRepository;
 import org.springframework.beans.BeanUtils;
@@ -116,7 +116,7 @@ public class OrderService {
 
     private Order findOrderByIdOrThrow(Long id) {
         return orderRepository.findOrderById(id)
-                .orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado"));
+                .orElseThrow(() -> new NotFoundException("Pedido não encontrado"));
     }
 
     private void validateOrderDates(OrderDTO data) {
