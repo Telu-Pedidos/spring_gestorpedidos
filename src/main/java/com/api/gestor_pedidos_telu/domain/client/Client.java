@@ -1,6 +1,8 @@
 package com.api.gestor_pedidos_telu.domain.client;
 
+import com.api.gestor_pedidos_telu.domain.order.Order;
 import com.api.gestor_pedidos_telu.dto.ClientDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -11,6 +13,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.api.gestor_pedidos_telu.utils.Regex.PHONE_PATTERN;
 
@@ -46,6 +49,10 @@ public class Client {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties("client")
+    private List<Order> orders;
 
     public Client(ClientDTO data) {
         this.name = data.name();
