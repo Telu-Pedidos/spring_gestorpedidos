@@ -1,8 +1,11 @@
 package com.api.gestor_pedidos_telu.domain.product;
 
+import com.api.gestor_pedidos_telu.domain.category.Category;
 import com.api.gestor_pedidos_telu.dto.ProductDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -17,6 +20,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,15 +38,20 @@ public class Product {
     private String imageUrl;
 
     @NotNull(message = "O preço é obrigatório")
-    @Positive(message = "O preço deve ser maior que zero")
+    @Min(value = 0, message = "Deve ser um preço válido")
     private BigDecimal price;
 
     private Boolean active = true;
 
-    public Product(ProductDTO data) {
+    @ManyToOne
+    @JsonIgnoreProperties("products")
+    private Category category;
+
+    public Product(ProductDTO data, Category category) {
         this.name = data.name();
         this.slug = data.slug();
         this.imageUrl = data.imageUrl();
         this.price = data.price();
+        this.category = category;
     }
 }

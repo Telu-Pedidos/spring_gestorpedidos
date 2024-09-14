@@ -1,11 +1,15 @@
 package com.api.gestor_pedidos_telu.domain.category;
 
+import com.api.gestor_pedidos_telu.domain.product.Product;
 import com.api.gestor_pedidos_telu.dto.CategoryDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.util.List;
 
 @Entity(name = "categories")
 @Table(name = "categories")
@@ -29,6 +33,10 @@ public class Category {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Size(max = 255, message = "O modelo deve ter no máximo 255 caracteres")
     private String model;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties("category")
+    private List<Product> products;
 
     public Category(CategoryDTO data) {
         this.name = data.name();

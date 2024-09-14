@@ -1,8 +1,10 @@
 package com.api.gestor_pedidos_telu.service;
 
+import com.api.gestor_pedidos_telu.domain.category.Category;
 import com.api.gestor_pedidos_telu.domain.product.Product;
 import com.api.gestor_pedidos_telu.dto.ProductDTO;
 import com.api.gestor_pedidos_telu.infra.Exception.NotFoundException;
+import com.api.gestor_pedidos_telu.repository.CategoryRepository;
 import com.api.gestor_pedidos_telu.repository.ProductRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public List<Product> getProducts(String name, BigDecimal minPrice, BigDecimal maxPrice, Boolean active) {
         if (name != null && minPrice != null && maxPrice != null && active != null) {
@@ -63,9 +68,11 @@ public class ProductService {
     }
 
     public Product createProduct(ProductDTO data) {
-        Product newProduct = new Product(data);
+        Category category = findCategoryByIdOrThrow(data.categoryId());
 
         validateProductNameUniqueness(data.name(), null);
+
+        Product newProduct = new Product(data, category);
 
         if (data.slug() == null || data.slug().isEmpty()) {
             newProduct.setSlug(generateSlug(newProduct.getName()));
@@ -76,10 +83,11 @@ public class ProductService {
 
     public Product updateProduct(Long id, ProductDTO data) {
         Product product = findProductByIdOrThrow(id);
-
         validateProductNameUniqueness(data.name(), id);
 
+        Category category = findCategoryByIdOrThrow(data.categoryId());
         BeanUtils.copyProperties(data, product);
+        product.setCategory(category);
 
         if (data.slug() == null || data.slug().isEmpty()) {
             product.setSlug(generateSlug(product.getName()));
@@ -91,10 +99,6 @@ public class ProductService {
     public void deleteProduct(Long id) {
         findProductByIdOrThrow(id);
         productRepository.deleteById(id);
-    }
-
-    public List<Product> getProductsByActive(Boolean active) {
-        return productRepository.findAllByActive(active).orElse(Collections.emptyList());
     }
 
     public Product activateProduct(Long id) throws Exception {
@@ -136,6 +140,11 @@ public class ProductService {
     private Product findProductByIdOrThrow(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Produto não encontrado"));
+    }
+
+    private Category findCategoryByIdOrThrow(Long categoryId) {
+        return categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
     }
 
 }
