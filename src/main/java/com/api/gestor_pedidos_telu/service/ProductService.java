@@ -18,7 +18,7 @@ import java.util.Optional;
 public class ProductService {
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     public List<Product> getProducts(String name, BigDecimal minPrice, BigDecimal maxPrice, Boolean active) {
         if (name != null && minPrice != null && maxPrice != null && active != null) {

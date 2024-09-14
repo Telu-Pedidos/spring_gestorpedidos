@@ -16,7 +16,7 @@ import java.util.Optional;
 public class ClientService {
 
     @Autowired
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
     public List<Client> getClients(String name) {
 
