@@ -1,4 +1,4 @@
-package com.api.gestor_pedidos_telu.infra.Exception;
+package com.api.gestor_pedidos_telu.infra.exception;
 
 import com.api.gestor_pedidos_telu.dto.ExceptionDTO;
 import jakarta.persistence.EntityNotFoundException;

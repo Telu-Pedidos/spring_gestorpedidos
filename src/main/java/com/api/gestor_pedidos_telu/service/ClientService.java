@@ -2,7 +2,7 @@ package com.api.gestor_pedidos_telu.service;
 
 import com.api.gestor_pedidos_telu.domain.client.Client;
 import com.api.gestor_pedidos_telu.dto.ClientDTO;
-import com.api.gestor_pedidos_telu.infra.Exception.NotFoundException;
+import com.api.gestor_pedidos_telu.infra.exception.NotFoundException;
 import com.api.gestor_pedidos_telu.repository.ClientRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
