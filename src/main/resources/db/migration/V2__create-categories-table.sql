@@ -1,0 +1,6 @@
+CREATE TABLE categories (
+    id INTEGER PRIMARY KEY UNIQUE NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    slug VARCHAR(150),
+    model VARCHAR(255)
+);
