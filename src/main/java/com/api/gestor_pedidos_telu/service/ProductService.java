@@ -6,6 +6,7 @@ import com.api.gestor_pedidos_telu.dto.ProductDTO;
 import com.api.gestor_pedidos_telu.infra.exception.NotFoundException;
 import com.api.gestor_pedidos_telu.repository.CategoryRepository;
 import com.api.gestor_pedidos_telu.repository.ProductRepository;
+import com.api.gestor_pedidos_telu.utils.Prices;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import java.text.Normalizer;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static com.api.gestor_pedidos_telu.utils.Prices.formatPrice;
 
 @Service
 public class ProductService {
@@ -78,6 +81,9 @@ public class ProductService {
             newProduct.setSlug(generateSlug(newProduct.getName()));
         }
 
+        BigDecimal formattedPrice = formatPrice(newProduct.getPrice());
+        newProduct.setPrice(formattedPrice);
+
         return productRepository.save(newProduct);
     }
 
@@ -92,6 +98,9 @@ public class ProductService {
         if (data.slug() == null || data.slug().isEmpty()) {
             product.setSlug(generateSlug(product.getName()));
         }
+
+        BigDecimal formattedPrice = formatPrice(product.getPrice());
+        product.setPrice(formattedPrice);
 
         return productRepository.save(product);
     }
