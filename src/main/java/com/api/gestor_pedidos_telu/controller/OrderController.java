@@ -4,6 +4,7 @@ import com.api.gestor_pedidos_telu.domain.order.Order;
 import com.api.gestor_pedidos_telu.domain.order.OrderStatus;
 import com.api.gestor_pedidos_telu.dto.OrderDTO;
 import com.api.gestor_pedidos_telu.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +36,13 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody OrderDTO order) {
+    public ResponseEntity<Order> createOrder(@Valid @RequestBody OrderDTO order) {
         Order newOrder = orderService.createOrder(order);
         return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody OrderDTO order) {
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @Valid @RequestBody OrderDTO order) {
         Order newOrder = orderService.updateOrder(id, order);
         return ResponseEntity.ok(newOrder);
     }

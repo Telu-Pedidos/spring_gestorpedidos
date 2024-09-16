@@ -5,10 +5,7 @@ import com.api.gestor_pedidos_telu.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -26,7 +23,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "O nome é obrigatório")
+    @NotBlank(message = "O nome é obrigatório")
     @Size(min = 3, max = 255, message = "O nome deve ter entre 3 a 255 caracteres")
     private String name;
 

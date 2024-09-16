@@ -3,6 +3,7 @@ package com.api.gestor_pedidos_telu.controller;
 import com.api.gestor_pedidos_telu.domain.category.Category;
 import com.api.gestor_pedidos_telu.dto.CategoryDTO;
 import com.api.gestor_pedidos_telu.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +31,13 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody CategoryDTO category) {
+    public ResponseEntity<Category> createCategory(@Valid @RequestBody CategoryDTO category) {
         Category newCategory = categoryService.createCategory(category);
         return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO category) {
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryDTO category) {
         Category newCategory = categoryService.updateCategory(id, category);
         return ResponseEntity.ok(newCategory);
     }

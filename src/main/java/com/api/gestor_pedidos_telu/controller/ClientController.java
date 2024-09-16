@@ -3,6 +3,7 @@ package com.api.gestor_pedidos_telu.controller;
 import com.api.gestor_pedidos_telu.domain.client.Client;
 import com.api.gestor_pedidos_telu.dto.ClientDTO;
 import com.api.gestor_pedidos_telu.service.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +33,13 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> createClient(@RequestBody ClientDTO client) {
+    public ResponseEntity<Client> createClient(@Valid @RequestBody ClientDTO client) {
         Client newClient = clientService.createClient(client);
         return new ResponseEntity<>(newClient, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable String id, @RequestBody ClientDTO client) {
+    public ResponseEntity<Client> updateClient(@PathVariable String id, @Valid @RequestBody ClientDTO client) {
         Client newClient = clientService.updateClient(id, client);
         return ResponseEntity.ok(newClient);
     }

@@ -5,10 +5,7 @@ import com.api.gestor_pedidos_telu.dto.ClientDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -30,7 +27,7 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @NotNull(message = "O nome é obrigatório")
+    @NotBlank(message = "O nome é obrigatório")
     @Size(min = 2, max = 100, message = "O nome deve ter entre 2 a 100 caracteres")
     private String name;
 

@@ -3,6 +3,7 @@ package com.api.gestor_pedidos_telu.controller;
 import com.api.gestor_pedidos_telu.domain.product.Product;
 import com.api.gestor_pedidos_telu.dto.ProductDTO;
 import com.api.gestor_pedidos_telu.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +36,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO product) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody ProductDTO product) {
         Product newProduct = productService.createProduct(product);
         return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDTO product) {
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDTO product) {
         Product newProduct = productService.updateProduct(id, product);
         return ResponseEntity.ok(newProduct);
     }

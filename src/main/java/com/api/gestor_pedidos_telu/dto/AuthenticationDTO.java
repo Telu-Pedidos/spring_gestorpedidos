@@ -10,6 +10,7 @@ public record AuthenticationDTO(
         @Email(message = "O login deve ser um e-mail válido")
         String login,
 
+        @NotBlank(message = "A senha não pode ser vazia")
         @Size(min = 8, message = "A senha deve conter no minimo 8 caracteres")
         String password,
 
