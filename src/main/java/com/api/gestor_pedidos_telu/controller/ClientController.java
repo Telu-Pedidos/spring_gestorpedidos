@@ -3,6 +3,8 @@ package com.api.gestor_pedidos_telu.controller;
 import com.api.gestor_pedidos_telu.domain.client.Client;
 import com.api.gestor_pedidos_telu.dto.ClientDTO;
 import com.api.gestor_pedidos_telu.service.ClientService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.api.gestor_pedidos_telu.infra.security.SecurityConfigurations.SECURITY_NAME;
+
 @RestController()
 @RequestMapping("/clients")
+@Tag(name = "Client")
+@SecurityRequirement(name = SECURITY_NAME)
 public class ClientController {
 
     @Autowired

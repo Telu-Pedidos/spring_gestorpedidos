@@ -4,6 +4,8 @@ import com.api.gestor_pedidos_telu.domain.order.Order;
 import com.api.gestor_pedidos_telu.domain.order.OrderStatus;
 import com.api.gestor_pedidos_telu.dto.OrderDTO;
 import com.api.gestor_pedidos_telu.service.OrderService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,8 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.api.gestor_pedidos_telu.infra.security.SecurityConfigurations.SECURITY_NAME;
+
 @RestController()
 @RequestMapping("/orders")
+@Tag(name = "Order")
+@SecurityRequirement(name = SECURITY_NAME)
 public class OrderController {
 
     @Autowired

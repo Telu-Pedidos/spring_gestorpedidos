@@ -3,6 +3,8 @@ package com.api.gestor_pedidos_telu.controller;
 import com.api.gestor_pedidos_telu.domain.product.Product;
 import com.api.gestor_pedidos_telu.dto.ProductDTO;
 import com.api.gestor_pedidos_telu.service.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.api.gestor_pedidos_telu.infra.security.SecurityConfigurations.SECURITY_NAME;
+
 @RestController()
 @RequestMapping("/products")
+@Tag(name = "Product")
+@SecurityRequirement(name = SECURITY_NAME)
 public class ProductController {
 
     @Autowired
