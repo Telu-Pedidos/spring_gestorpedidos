@@ -3,6 +3,7 @@ package com.api.gestor_pedidos_telu.service;
 import com.api.gestor_pedidos_telu.domain.user.User;
 import com.api.gestor_pedidos_telu.dto.AuthenticationDTO;
 import com.api.gestor_pedidos_telu.dto.LoginResponseDTO;
+import com.api.gestor_pedidos_telu.dto.RegisterDTO;
 import com.api.gestor_pedidos_telu.infra.exception.UserAlreadyExistsException;
 import com.api.gestor_pedidos_telu.infra.security.TokenService;
 import com.api.gestor_pedidos_telu.repository.UserRepository;
@@ -41,7 +42,7 @@ public class AuthenticationService {
         }
     }
 
-    public void register(AuthenticationDTO data) {
+    public void register(RegisterDTO data) {
         if (userRepository.findByLogin(data.login()).isPresent()) {
             throw new UserAlreadyExistsException("Usuário já existe");
         }
