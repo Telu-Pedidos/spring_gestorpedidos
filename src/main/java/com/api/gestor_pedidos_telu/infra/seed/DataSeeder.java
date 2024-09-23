@@ -12,8 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class DataSeeder {
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
-
 
     @Value("${admin.email}")
     private String adminEmail;
@@ -21,9 +19,8 @@ public class DataSeeder {
     @Value("${admin.password}")
     private String adminPassword;
 
-    public DataSeeder(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public DataSeeder(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
@@ -32,7 +29,10 @@ public class DataSeeder {
             if (userRepository.count() == 0) {
                 User user = new User();
                 user.setLogin(adminEmail);
-                user.setPassword(passwordEncoder.encode(adminPassword));
+
+                String encryptedPassword = new BCryptPasswordEncoder().encode(adminPassword);
+
+                user.setPassword(encryptedPassword);
                 user.setRole(UserRole.ADMIN);
 
                 userRepository.save(user);
