@@ -10,9 +10,6 @@ public record CategoryDTO(
         String name,
 
         @Size(max = 150, message = "O slug deve ter no máximo 150 caracteres")
-        String slug,
-
-        @Size(max = 255, message = "O modelo deve ter no máximo 255 caracteres")
-        String model
+        String slug
 ) {
 }

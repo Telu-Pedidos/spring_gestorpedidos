@@ -31,9 +31,6 @@ public class Category {
     @Size(max = 150, message = "O slug deve ter no máximo 150 caracteres")
     private String slug;
 
-    @Size(max = 255, message = "O modelo deve ter no máximo 255 caracteres")
-    private String model;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("category")
     private List<Product> products;
@@ -41,6 +38,5 @@ public class Category {
     public Category(CategoryDTO data) {
         this.name = data.name();
         this.slug = data.slug();
-        this.model = data.model();
     }
 }
