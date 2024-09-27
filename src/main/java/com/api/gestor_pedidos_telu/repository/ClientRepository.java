@@ -5,12 +5,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface ClientRepository extends JpaRepository<Client, String> {
     Optional<Client> findById(String id);
 
     Optional<Client> findByEmail(String email);
+
+    Optional<Client> findByPhone(String phone);
 
     Optional<List<Client>> findByNameContainingIgnoreCase(String name);
 

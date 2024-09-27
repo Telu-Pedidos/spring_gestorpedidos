@@ -35,7 +35,7 @@ public class ClientService {
     public Client createClient(ClientDTO data) {
         Client newClient = new Client(data);
 
-        validateClientEmailUniqueness(data.email(), null);
+        validateClientPhoneUniqueness(data.phone(), null);
 
         return clientRepository.save(newClient);
     }
@@ -43,7 +43,7 @@ public class ClientService {
     public Client updateClient(String id, ClientDTO data) {
         Client client = findClientByIdOrThrow(id);
 
-        validateClientEmailUniqueness(data.email(), id);
+        validateClientPhoneUniqueness(data.phone(), id);
 
         BeanUtils.copyProperties(data, client);
 
@@ -55,11 +55,11 @@ public class ClientService {
         clientRepository.deleteById(id);
     }
 
-    private void validateClientEmailUniqueness(String email, String clientId) {
-        Optional<Client> existingClient = clientRepository.findByEmail(email);
+    private void validateClientPhoneUniqueness(String phone, String clientId) {
+        Optional<Client> existingClient = clientRepository.findByPhone(phone);
 
         if (existingClient.isPresent() && !existingClient.get().getId().equals(clientId)) {
-            throw new IllegalArgumentException("Cliente já registrado");
+            throw new IllegalArgumentException("Telefone já registrado");
         }
     }
 

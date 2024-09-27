@@ -32,12 +32,18 @@ public class Client {
     private String name;
 
     @Email(message = "Deve ser um email válido")
-    @Column(unique = true)
     private String email;
 
     @Size(min = 2, max = 250, message = "O endereço deve ter entre 2 a 250 caracteres")
     private String address;
 
+    @Pattern(
+            regexp = PHONE_PATTERN,
+            message = "O telefone deve ser válido, com ou sem DDD, e no formato (XX) XXXXX-XXXX ou similar"
+    )
+
+    @NotBlank(message = "O telefone é obrigatório")
+    @Column(unique = true)
     @Pattern(
             regexp = PHONE_PATTERN,
             message = "O telefone deve ser válido, com ou sem DDD, e no formato (XX) XXXXX-XXXX ou similar"
