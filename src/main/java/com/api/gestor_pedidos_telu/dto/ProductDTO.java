@@ -24,6 +24,8 @@ public record ProductDTO(
         BigDecimal price,
 
         @NotNull(message = "A categoria é obrigatória")
-        Long categoryId
+        Long categoryId,
+
+        Long modelId
 ) {
 }

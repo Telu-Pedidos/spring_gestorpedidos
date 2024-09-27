@@ -1,12 +1,12 @@
 package com.api.gestor_pedidos_telu.service;
 
 import com.api.gestor_pedidos_telu.domain.category.Category;
+import com.api.gestor_pedidos_telu.domain.model.Model;
 import com.api.gestor_pedidos_telu.domain.product.Product;
 import com.api.gestor_pedidos_telu.dto.ProductDTO;
 import com.api.gestor_pedidos_telu.infra.exception.NotFoundException;
 import com.api.gestor_pedidos_telu.repository.CategoryRepository;
 import com.api.gestor_pedidos_telu.repository.ProductRepository;
-import com.api.gestor_pedidos_telu.utils.Prices;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +27,9 @@ public class ProductService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ModelService modelService;
 
     public List<Product> getProducts(String name, BigDecimal minPrice, BigDecimal maxPrice, Boolean active) {
         if (name != null && minPrice != null && maxPrice != null && active != null) {
@@ -79,6 +82,11 @@ public class ProductService {
 
         if (data.slug() == null || data.slug().isEmpty()) {
             newProduct.setSlug(generateSlug(newProduct.getName()));
+        }
+
+        if (data.modelId() != null) {
+            Model model = modelService.getModelById(data.modelId());
+            newProduct.setModel(model);
         }
 
         BigDecimal formattedPrice = formatPrice(newProduct.getPrice());
