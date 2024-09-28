@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -45,9 +46,15 @@ public class Order {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @Enumerated(EnumType.STRING)
+    private OrderDelivery delivery;
+
     @ManyToOne
     @JsonIgnoreProperties("orders")
     private Client client;
+
+    @Size(max = 2000, message = "A observação deve ter no máximo 2000 caracteres")
+    private String observation;
 
     @ManyToMany
     @JsonIgnoreProperties("products")
@@ -65,6 +72,8 @@ public class Order {
         this.total = data.total();
         this.client = client;
         this.products = products;
+        this.delivery = data.delivery();
+        this.observation = data.observation();
     }
 
 }
