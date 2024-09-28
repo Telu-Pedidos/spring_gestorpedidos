@@ -1,1 +1,2 @@
 ALTER TABLE clients ALTER COLUMN phone DROP NOT NULL;
+ALTER TABLE clients DROP CONSTRAINT clients_phone_key;

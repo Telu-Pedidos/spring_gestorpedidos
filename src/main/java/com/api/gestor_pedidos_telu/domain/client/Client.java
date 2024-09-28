@@ -12,8 +12,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.api.gestor_pedidos_telu.utils.Regex.PHONE_PATTERN;
-
 @Entity(name = "clients")
 @Table(name = "clients")
 @Getter
@@ -37,16 +35,6 @@ public class Client {
     @Size(max = 250, message = "O endereço não pode passar de 250 caracteres")
     private String address;
 
-    @Pattern(
-            regexp = PHONE_PATTERN,
-            message = "O telefone deve ser válido, com ou sem DDD, e no formato (XX) XXXXX-XXXX ou similar"
-    )
-
-    @Column(unique = true)
-    @Pattern(
-            regexp = PHONE_PATTERN,
-            message = "O telefone deve ser válido, com ou sem DDD, e no formato (XX) XXXXX-XXXX ou similar"
-    )
     private String phone;
 
     @CreationTimestamp

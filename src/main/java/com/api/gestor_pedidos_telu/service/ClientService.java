@@ -12,6 +12,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.api.gestor_pedidos_telu.utils.Phone.*;
+
+
 @Service
 public class ClientService {
 
@@ -59,7 +62,13 @@ public class ClientService {
         if (phone == null || phone.trim().isEmpty()) {
             return;
         }
-        
+
+        boolean validPhone = isPhoneValid(phone);
+
+        if (!validPhone) {
+            throw new IllegalArgumentException("O telefone deve ser válido, com ou sem DDD, e no formato (XX) XXXXX-XXXX ou similar");
+        }
+
         Optional<Client> existingClient = clientRepository.findByPhone(phone);
 
         if (existingClient.isPresent() && !existingClient.get().getId().equals(clientId)) {
