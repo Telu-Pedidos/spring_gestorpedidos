@@ -100,7 +100,7 @@ public class OrderService {
     public Order cancelOrder(Long orderId) throws Exception {
         Order order = findOrderByIdOrThrow(orderId);
 
-        if (order.getStatus() != OrderStatus.FINISHED && order.getStatus() != OrderStatus.CANCELLED) {
+        if (order.getStatus() != OrderStatus.COMPLETED && order.getStatus() != OrderStatus.CANCELLED) {
             order.setStatus(OrderStatus.CANCELLED);
             order.setEndAt(LocalDateTime.now());
             order.setUpdatedAt(LocalDateTime.now());
@@ -117,11 +117,11 @@ public class OrderService {
             throw new Exception("Não é possível finalizar um pedido cancelado");
         }
 
-        if (order.getStatus() == OrderStatus.FINISHED) {
+        if (order.getStatus() == OrderStatus.COMPLETED) {
             throw new Exception("Não é possível finalizar um pedido que já está finalizado");
         }
 
-        order.setStatus(OrderStatus.FINISHED);
+        order.setStatus(OrderStatus.COMPLETED);
         order.setEndAt(LocalDateTime.now());
         order.setUpdatedAt(LocalDateTime.now());
         return orderRepository.save(order);
