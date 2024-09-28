@@ -17,10 +17,9 @@ public record ClientDTO(
         @Email(message = "Deve ser um email válido")
         String email,
 
-        @Size(min = 2, max = 250, message = "O endereço deve ter entre 2 a 250 caracteres")
+        @Size(max = 250, message = "O endereço não pode passar de 250 caracteres")
         String address,
 
-        @NotBlank(message = "O telefone é obrigatório")
         @Column(unique = true)
         @Pattern(
                 regexp = PHONE_PATTERN,

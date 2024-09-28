@@ -56,6 +56,10 @@ public class ClientService {
     }
 
     private void validateClientPhoneUniqueness(String phone, String clientId) {
+        if (phone == null || phone.trim().isEmpty()) {
+            return;
+        }
+        
         Optional<Client> existingClient = clientRepository.findByPhone(phone);
 
         if (existingClient.isPresent() && !existingClient.get().getId().equals(clientId)) {
