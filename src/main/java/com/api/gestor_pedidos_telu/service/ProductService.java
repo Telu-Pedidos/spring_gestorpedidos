@@ -31,6 +31,9 @@ public class ProductService {
     @Autowired
     private ModelService modelService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     public List<Product> getProducts(String name, BigDecimal minPrice, BigDecimal maxPrice, Boolean active) {
         if (name != null && minPrice != null && maxPrice != null && active != null) {
             return productRepository.findByNameContainingIgnoreCaseAndPriceBetweenAndActive(name.toLowerCase(), minPrice, maxPrice, active)
@@ -74,11 +77,9 @@ public class ProductService {
     }
 
     public Product createProduct(ProductDTO data) {
-        Category category = findCategoryByIdOrThrow(data.categoryId());
-
         validateProductNameUniqueness(data.name(), null);
 
-        Product newProduct = new Product(data, category);
+        Product newProduct = new Product(data);
 
         if (data.slug() == null || data.slug().isEmpty()) {
             newProduct.setSlug(generateSlug(newProduct.getName()));
@@ -87,6 +88,11 @@ public class ProductService {
         if (data.modelId() != null) {
             Model model = modelService.getModelById(data.modelId());
             newProduct.setModel(model);
+        }
+
+        if (data.categoryId() != null) {
+            Category category = categoryService.getCategoryById(data.categoryId());
+            newProduct.setCategory(category);
         }
 
         BigDecimal formattedPrice = formatPrice(newProduct.getPrice());
@@ -99,12 +105,20 @@ public class ProductService {
         Product product = findProductByIdOrThrow(id);
         validateProductNameUniqueness(data.name(), id);
 
-        Category category = findCategoryByIdOrThrow(data.categoryId());
         BeanUtils.copyProperties(data, product);
-        product.setCategory(category);
 
         if (data.slug() == null || data.slug().isEmpty()) {
             product.setSlug(generateSlug(product.getName()));
+        }
+
+        if (data.modelId() != null) {
+            Model model = modelService.getModelById(data.modelId());
+            product.setModel(model);
+        }
+
+        if (data.categoryId() != null) {
+            Category category = categoryService.getCategoryById(data.categoryId());
+            product.setCategory(category);
         }
 
         BigDecimal formattedPrice = formatPrice(product.getPrice());
@@ -157,11 +171,6 @@ public class ProductService {
     private Product findProductByIdOrThrow(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Produto não encontrado"));
-    }
-
-    private Category findCategoryByIdOrThrow(Long categoryId) {
-        return categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
     }
 
 }

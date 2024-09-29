@@ -23,9 +23,8 @@ public record ProductDTO(
         @Min(value = 0, message = "Deve ser um preço válido")
         BigDecimal price,
 
-        @NotNull(message = "A categoria é obrigatória")
         Long categoryId,
-
+        
         Long modelId
 ) {
 }

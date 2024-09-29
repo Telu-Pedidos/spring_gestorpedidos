@@ -58,11 +58,10 @@ public class Product {
     @JsonIgnoreProperties("products")
     private Model model;
 
-    public Product(ProductDTO data, Category category) {
+    public Product(ProductDTO data) {
         this.name = data.name();
         this.slug = data.slug();
         this.imageUrl = data.imageUrl();
         this.price = data.price();
-        this.category = category;
     }
 }
