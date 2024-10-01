@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.api.gestor_pedidos_telu.utils.Prices.formatPrice;
+import static com.api.gestor_pedidos_telu.utils.Slug.generateSlug;
 
 @Service
 public class ProductService {
@@ -148,16 +149,6 @@ public class ProductService {
 
         product.setActive(false);
         return productRepository.save(product);
-    }
-
-    private String generateSlug(String name) {
-        if (name != null && !name.trim().isEmpty()) {
-            String normalized = Normalizer.normalize(name.trim(), Normalizer.Form.NFD);
-            String slug = normalized.replaceAll("\\p{M}", "");
-
-            return slug.toLowerCase().replaceAll(" ", "-").replaceAll("-+", "-");
-        }
-        return "";
     }
 
     private void validateProductNameUniqueness(String name, Long productId) {
