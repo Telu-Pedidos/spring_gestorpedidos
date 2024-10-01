@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.api.gestor_pedidos_telu.utils.Slug.generateSlug;
+
 @Service
 public class ModelService {
 
@@ -28,6 +30,11 @@ public class ModelService {
     public Model createModel(ModelDTO data) {
         Model newModel = new Model(data);
         validateModelNameUniqueness(newModel.getName(), null);
+
+        if (data.slug() == null || data.slug().isEmpty()) {
+            newModel.setSlug(generateSlug(newModel.getName()));
+        }
+
         return modelRepository.save(newModel);
     }
 
@@ -36,6 +43,11 @@ public class ModelService {
         validateModelNameUniqueness(model.getName(), id);
 
         BeanUtils.copyProperties(data, model);
+
+        if (data.slug() == null || data.slug().isEmpty()) {
+            model.setSlug(generateSlug(model.getName()));
+        }
+        
         return modelRepository.save(model);
     }
 

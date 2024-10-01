@@ -8,7 +8,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity(name = "models")
@@ -31,6 +34,15 @@ public class Model {
     @Size(max = 2000)
     private String imageUrl;
 
+    @Size(max = 255, message = "O slug deve ter no máximo 255 caracteres")
+    private String slug;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+    
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "model", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("model")
     private List<Product> products;
@@ -38,5 +50,6 @@ public class Model {
     public Model(ModelDTO data) {
         this.name = data.name();
         this.imageUrl = data.imageUrl();
+        this.slug = data.slug();
     }
 }
