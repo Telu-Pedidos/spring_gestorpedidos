@@ -146,11 +146,8 @@ public class OrderService {
 
     private void validateOrderDates(OrderDTO order) {
         LocalDateTime now = LocalDateTime.now();
-        if (order.startAt().isAfter(now) || order.endAt().isAfter(now)) {
-            throw new InvalidOrderDateException("As datas startAt e endAt devem ser menores do que a data atual.");
-        }
         if (order.endAt().isBefore(order.startAt())) {
-            throw new InvalidOrderDateException("A data endAt não pode ser anterior à data startAt.");
+            throw new InvalidOrderDateException("A data final não pode ser anterior à data de início.");
         }
     }
 
