@@ -59,19 +59,19 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/{id}/cancel")
+    @PatchMapping("/{id}/cancel")
     public ResponseEntity<Order> cancelOrder(@PathVariable Long id) throws Exception {
         Order canceledOrder = orderService.cancelOrder(id);
         return ResponseEntity.ok(canceledOrder);
     }
 
-    @PutMapping("/{id}/finish")
+    @PatchMapping("/{id}/finish")
     public ResponseEntity<Order> finishOrder(@PathVariable Long id) throws Exception {
         Order canceledOrder = orderService.finishOrder(id);
         return ResponseEntity.ok(canceledOrder);
     }
 
-    @PutMapping("/{id}/status")
+    @PatchMapping("/{id}/status")
     public ResponseEntity<Order> updateOrderStatus(@PathVariable Long id, @RequestParam OrderStatus newStatus) {
         Order updatedOrder = orderService.updateOrderStatus(id, newStatus);
         return ResponseEntity.ok(updatedOrder);
