@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class OrderService {
     @Autowired
     private ProductRepository productRepository;
 
-    public List<Order> getOrders(OrderStatus status, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Order> getOrders(OrderStatus status, ZonedDateTime startDate, ZonedDateTime endDate) {
         if (status != null && startDate != null && endDate != null) {
             return orderRepository.findByStatusAndStartAtBetween(status, startDate, endDate)
                     .orElse(Collections.emptyList());
@@ -67,7 +67,7 @@ public class OrderService {
         Order newOrder = new Order(order, client, products);
 
         if (order.total() == null) newOrder.setTotal(newTotal);
-        if (order.startAt() == null) newOrder.setStartAt(LocalDateTime.now());
+        if (order.startAt() == null) newOrder.setStartAt(ZonedDateTime.now());
         if (order.status() == null) newOrder.setStatus(OrderStatus.PENDING);
 
         return orderRepository.save(newOrder);
@@ -102,8 +102,8 @@ public class OrderService {
 
         if (order.getStatus() != OrderStatus.COMPLETED && order.getStatus() != OrderStatus.CANCELLED) {
             order.setStatus(OrderStatus.CANCELLED);
-            order.setEndAt(LocalDateTime.now());
-            order.setUpdatedAt(LocalDateTime.now());
+            order.setEndAt(ZonedDateTime.now());
+            order.setUpdatedAt(ZonedDateTime.now());
             return orderRepository.save(order);
         } else {
             throw new Exception("Não é possível cancelar um pedido finalizado ou já cancelado.");
@@ -122,15 +122,15 @@ public class OrderService {
         }
 
         order.setStatus(OrderStatus.COMPLETED);
-        order.setEndAt(LocalDateTime.now());
-        order.setUpdatedAt(LocalDateTime.now());
+        order.setEndAt(ZonedDateTime.now());
+        order.setUpdatedAt(ZonedDateTime.now());
         return orderRepository.save(order);
     }
 
     public Order updateOrderStatus(Long orderId, OrderStatus newStatus) {
         Order order = findOrderByIdOrThrow(orderId);
         order.setStatus(newStatus);
-        order.setUpdatedAt(LocalDateTime.now());
+        order.setUpdatedAt(ZonedDateTime.now());
         return orderRepository.save(order);
     }
 
@@ -145,7 +145,7 @@ public class OrderService {
     }
 
     private void validateOrderDates(OrderDTO order) {
-        LocalDateTime now = LocalDateTime.now();
+        ZonedDateTime now = ZonedDateTime.now();
         if (order.endAt().isBefore(order.startAt())) {
             throw new InvalidOrderDateException("A data final não pode ser anterior à data de início.");
         }

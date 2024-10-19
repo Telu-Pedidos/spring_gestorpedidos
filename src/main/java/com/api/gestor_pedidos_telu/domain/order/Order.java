@@ -13,7 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Entity(name = "orders")
@@ -36,15 +36,15 @@ public class Order {
     @Positive(message = "O total deve ser maior que zero.")
     private BigDecimal total;
 
-    private LocalDateTime startAt;
+    private ZonedDateTime startAt;
 
-    private LocalDateTime endAt;
+    private ZonedDateTime endAt;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private ZonedDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
     private OrderDelivery delivery;

@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.api.gestor_pedidos_telu.infra.security.SecurityConfigurations.SECURITY_NAME;
@@ -35,8 +35,8 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<List<Order>> getOrders(
             @RequestParam(value = "status", required = false) OrderStatus status,
-            @RequestParam(value = "startDate", required = false) LocalDateTime startDate,
-            @RequestParam(value = "endDate", required = false) LocalDateTime endDate) {
+            @RequestParam(value = "startDate", required = false) ZonedDateTime startDate,
+            @RequestParam(value = "endDate", required = false) ZonedDateTime endDate) {
         List<Order> orders = orderService.getOrders(status, startDate, endDate);
         return ResponseEntity.ok(orders);
     }

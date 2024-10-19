@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public record OrderDTO(
@@ -20,10 +20,10 @@ public record OrderDTO(
         BigDecimal total,
 
         @NotNull(message = "Deve ter uma data de início")
-        LocalDateTime startAt,
+        ZonedDateTime startAt,
 
         @NotNull(message = "Deve ter uma data final")
-        LocalDateTime endAt,
+        ZonedDateTime endAt,
 
         @Enumerated(EnumType.STRING)
         OrderDelivery delivery,
