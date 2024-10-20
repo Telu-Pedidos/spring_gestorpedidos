@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.text.Normalizer;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static com.api.gestor_pedidos_telu.utils.Prices.formatPrice;
 import static com.api.gestor_pedidos_telu.utils.Slug.generateSlug;
@@ -78,8 +76,6 @@ public class ProductService {
     }
 
     public Product createProduct(ProductDTO data) {
-        validateProductNameUniqueness(data.name(), null);
-
         Product newProduct = new Product(data);
 
         if (data.slug() == null || data.slug().isEmpty()) {
@@ -104,7 +100,6 @@ public class ProductService {
 
     public Product updateProduct(Long id, ProductDTO data) {
         Product product = findProductByIdOrThrow(id);
-        validateProductNameUniqueness(data.name(), id);
 
         BeanUtils.copyProperties(data, product);
 
@@ -149,14 +144,6 @@ public class ProductService {
 
         product.setActive(false);
         return productRepository.save(product);
-    }
-
-    private void validateProductNameUniqueness(String name, Long productId) {
-        Optional<Product> existingProduct = productRepository.findByName(name);
-
-        if (existingProduct.isPresent() && !existingProduct.get().getId().equals(productId)) {
-            throw new IllegalArgumentException("Já existe um produto com esse nome");
-        }
     }
 
     private Product findProductByIdOrThrow(Long id) {
