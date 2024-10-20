@@ -146,6 +146,11 @@ public class OrderService {
 
     private void validateOrderDates(OrderDTO order) {
         ZonedDateTime now = ZonedDateTime.now();
+
+        if (order.startAt().isAfter(now)) {
+            throw new InvalidOrderDateException("A datas de inicio deve ser menor do que a data atual.");
+        }
+
         if (order.endAt().isBefore(order.startAt())) {
             throw new InvalidOrderDateException("A data final não pode ser anterior à data de início.");
         }
