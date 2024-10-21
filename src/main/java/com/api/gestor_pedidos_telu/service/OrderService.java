@@ -134,6 +134,14 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    public List<Order> getOrdersByMonth(int month) {
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException("O mês deve estar entre 1 e 12");
+        }
+        return orderRepository.findByMonth(month)
+                .orElse(Collections.emptyList());
+    }
+
     private Order findOrderByIdOrThrow(Long orderId) {
         return orderRepository.findOrderById(orderId)
                 .orElseThrow(() -> new NotFoundException("Pedido não encontrado"));

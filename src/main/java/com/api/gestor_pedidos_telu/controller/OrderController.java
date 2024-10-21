@@ -77,4 +77,10 @@ public class OrderController {
         return ResponseEntity.ok(updatedOrder);
     }
 
+    @GetMapping("/month/{month}")
+    public ResponseEntity<List<Order>> getOrdersByMonth(@PathVariable int month) {
+        List<Order> orders = orderService.getOrdersByMonth(month);
+        return ResponseEntity.ok(orders);
+    }
+
 }
