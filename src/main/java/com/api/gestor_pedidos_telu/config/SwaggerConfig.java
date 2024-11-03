@@ -21,12 +21,12 @@ public class SwaggerConfig {
                         .description("Télu Personalizados - Gestor de Pedidos")
                         .version("v0.0.1")
                         .license(new License()
-                                .name("Télu Personalizados")
-                                .url("https://www.instagram.com/telu.personalizados"))
+                                .name("Télu Personalizados - Github")
+                                .url("https://github.com/Telu-Pedidos"))
                         .contact(new Contact()
-                                .name("Jorge Guedes")
-                                .url("https://github.com/jorgeguedess")
-                                .email("jorge_guedes00@hotmail.com")));
+                                .name("Télu Personalizados")
+                                .url("https://bit.ly/m/TeluPersonalizados")
+                                .email("personalizadostelu@gmail.com")));
     }
 
 
